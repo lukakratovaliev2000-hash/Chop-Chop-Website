@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chop Chop Menu</title>
+    <style>
+        /* Reset & Core */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', 'Impact', sans-serif;
+            background: #000;
+            color: #fdfcf3;
+            line-height: 1.5;
+            padding: 1rem;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(240,36,40,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(240,36,40,0.06) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #111;
+            border: 4px solid #f02428;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(240,36,40,0.3);
+        }
+
+        /* Header */
+        header {
+            background: #000;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border-bottom: 5px solid #f02428;
+        }
+
+        .logo-img {
+            max-width: 220px;
+            height: auto;
+            filter: drop-shadow(0 0 12px rgba(240,36,40,0.5));
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 3.6rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 
+                0 0 10px rgba(240,36,40,0.7),
+                0 3px 6px #000;
+            margin: 0;
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            color: #f02428;
+            font-weight: bold;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+            text-shadow: 0 2px 4px #000;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 1.8rem;
+            background: #0a0a0a;
+        }
+
+        /* Accordion Section */
+        .accordion {
+            margin-bottom: 1.2rem;
+        }
+
+        .accordion-title {
+            font-size: 2.1rem;
+            color: #f02428;
+            padding: 1rem 1.2rem;
+            border: 3px solid #f02428;
+            border-radius: 6px;
+            background: #1a0000;
+            cursor: pointer;
+            font-weight: 900;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            position: relative;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .accordion-title::after {
+            content: '+';
+            position: absolute;
+            right: 1.2rem;
+            font-size: 2rem;
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-title.active::after {
+            content: '−';
+            transform: rotate(0deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.2rem;
+        }
+
+        .accordion-content.open {
+            max-height: 2000px; /* large enough for all content */
+            padding: 1.5rem 1.2rem 1rem;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #444;
+            font-size: 1.15rem;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name-size {
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+        }
+
+        .item-size {
+            color: #ccc;
+            font-style: italic;
+            font-weight: normal;
+            font-size: 0.95rem;
+        }
+
+        .item-price {
+            color: #f02428;
+            font-weight: 900;
+            font-size: 1.3rem;
+            min-width: 90px;
+            text-align: right;
+            text-shadow: 0 1px 2px #000;
+        }
+
+        /* Axe Section - Always Visible */
+        .axe-section {
+            background: #1a0000;
+            padding: 1.8rem;
+            border: 3px dashed #f02428;
+            border-radius: 8px;
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+
+        .axe-title {
+            font-size: 2.4rem;
+            color: #fff;
+            margin-bottom: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .axe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .axe-item {
+            background: rgba(240,36,40,0.15);
+            padding: 1rem;
+            border-radius: 6px;
+            border: 2px solid #f02428;
+        }
+
+        .axe-people {
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .axe-price {
+            font-size: 2rem;
+            color: #f02428;
+            font-weight: 900;
+            margin-top: 0.4rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #f02428;
+            font-weight: bold;
+            border-top: 4px solid #f02428;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .logo-img { max-width: 180px; }
+            .accordion-title { font-size: 1.8rem; }
+            .menu-item { flex-direction: column; text-align: center; }
+            .item-name-size { justify-content: center; gap: 0.5rem; }
+            .item-price { text-align: center; margin-top: 0.3rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem; }
+            .logo-img { max-width: 150px; }
+            header { padding: 1.2rem 0.8rem; }
+            main { padding: 1.5rem 1rem; }
+            .accordion-title { font-size: 1.6rem; padding: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="chopchop-logo.png" alt="Chop Chop Axe Throwing Logo" class="logo-img">
+            <h1>Chop Chop</h1>
+            <p class="tagline">Axe Throwing • Skopje</p>
+        </header>
+
+        <main>
+
+            <!-- Alcoholic Drinks -->
+            <div class="accordion">
+                <div class="accordion-title">Alcoholic Drinks</div>
+                <div class="accordion-content">
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Skopsko Smooth</span>
+                                <span class="item-size">0.5L</span>
+                            </div>
+                            <span class="item-price">120 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Skopsko</span>
+                                <span class="item-size">0.5L</span>
+                            </div>
+                            <span class="item-price">120 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Bavaria Premium</span>
+                                <span class="item-size">0.5L</span>
+                            </div>
+                            <span class="item-price">120 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Heineken</span>
+                                <span class="item-size">0.5L</span>
+                            </div>
+                            <span class="item-price">120 MKD</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Non-Alcoholic Beer -->
+            <div class="accordion">
+                <div class="accordion-title">Non-Alcoholic Beer (Bavaria 0.0%)</div>
+                <div class="accordion-content">
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Bavaria Smalt • Pomegranate</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">120 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Bavaria Smalt • Mango-Passionfruit</span>
+                                <span class="item-size">0.5L</span>
+                            </div>
+                            <span class="item-price">120 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Bavaria Smalt • Strawberry</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">100 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Bavaria Smalt • Pineapple</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">100 MKD</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Soft Drinks -->
+            <div class="accordion">
+                <div class="accordion-title">Soft Drinks</div>
+                <div class="accordion-content">
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Coca-Cola</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Coca-Cola Zero</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Schweppes Bitter Lemon</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Schweppes Bitter Lemon Zero</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Fanta</span>
+                                <span class="item-size">0.33L</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>B52 Energy Drink</span>
+                                <span class="item-size">0.25L</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>B52 Energy Drink Zero</span>
+                                <span class="item-size">0.25L</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Hot Beverages -->
+            <div class="accordion">
+                <div class="accordion-title">Hot Beverages</div>
+                <div class="accordion-content">
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Macchiato</span>
+                            </div>
+                            <span class="item-price">80 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Espresso</span>
+                            </div>
+                            <span class="item-price">70 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Tea</span>
+                            </div>
+                            <span class="item-price">70 MKD</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Water -->
+            <div class="accordion">
+                <div class="accordion-title">Water</div>
+                <div class="accordion-content">
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Still Water</span>
+                                <span class="item-size">0.25L</span>
+                            </div>
+                            <span class="item-price">60 MKD</span>
+                        </li>
+                        <li class="menu-item">
+                            <div class="item-name-size">
+                                <span>Sparkling Water</span>
+                                <span class="item-size">0.25L</span>
+                            </div>
+                            <span class="item-price">60 MKD</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Throw Hard • Drink Smart • Chop Chop Skopje</p>
+        </footer>
+    </div>
+
+    <script>
+        // Accordion Logic - Only one open at a time
+        document.querySelectorAll('.accordion-title').forEach(title => {
+            title.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isOpen = content.classList.contains('open');
+
+                // Close all
+                document.querySelectorAll('.accordion-content').forEach(c => {
+                    c.classList.remove('open');
+                });
+                document.querySelectorAll('.accordion-title').forEach(t => {
+                    t.classList.remove('active');
+                });
+
+                // Open clicked one (if not already open)
+                if (!isOpen) {
+                    content.classList.add('open');
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
